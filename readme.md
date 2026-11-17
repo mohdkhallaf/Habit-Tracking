@@ -71,7 +71,7 @@ An interactive, single-file executive habit-tracking and life-management command
 3. **Select Source Branch:** Under **Build and deployment**, set **Source** to **Deploy from a branch**, select `main` (or `master`), keep the folder set to `/ (root)`, and click **Save**.
 4. **Access Your Live Command Center:** Within ~60 seconds, your live dashboard will be accessible at:
    ```text
-   https://<your-github-username>.github.io/<repository-name>/
+   https://<your-github-username>.github.io/Habit-Tracking/
    ```
 5. **Mobile Home Screen Shortcut:** Open the GitHub Pages URL on your phone browser and tap **Add to Home Screen** to run it like a native app.
 
