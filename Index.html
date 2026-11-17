@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meeda's 90-Day Protocol Command Center — Day 1 (102.0 kg Start)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            arabic: ['Cairo', 'Inter', 'sans-serif']
+          },
+          colors: {
+            canvas: '#090D16',
+            card: '#111827',
+            elevated: '#1E293B',
+            roseAccent: '#F43F5E',
+            violetAccent: '#8B5CF6',
+            tealAccent: '#14B8A6',
+            amberAccent: '#F59E0B',
+            skyAccent: '#38BDF8'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #090D16;
+      color: #F8FAFC;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(244, 63, 94, 0.12) 0px, transparent 48%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.12) 0px, transparent 48%),
+        radial-gradient(at 50% 100%, rgba(20, 184, 166, 0.09) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(17, 24, 39, 0.86);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.55);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 9999px;
+    }
+    input[type="range"] {
+      accent-color: #14B8A6;
+    }
+    .rtl-box {
+      direction: rtl;
+      font-family: 'Cairo', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-rose-500 selection:text-white pb-16">
+
+  <!-- TOP EXECUTIVE BANNER -->
+  <header class="sticky top-0 z-30 border-b border-white/10 bg-[#090D16]/90 backdrop-blur-xl">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-rose-500 via-violet-600 to-teal-500 p-[1px] shadow-lg shadow-rose-500/20">
+          <div class="w-full h-full bg-[#090D16] rounded-[11px] flex items-center justify-center font-display font-extrabold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-rose-400 to-violet-400">
+            M90
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h1 class="font-display font-bold text-lg sm:text-xl text-white tracking-tight">
+              Meeda's 90-Day Protocol Command Center
+            </h1>
+            <span class="px-2.5 py-0.5 text-[11px] font-mono font-semibold uppercase tracking-wider rounded-full bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              Start Date: Nov 17, 2026 (Today)
+            </span>
+            <span class="px-2.5 py-0.5 text-[11px] font-mono font-semibold uppercase tracking-wider rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              Weight: 102.0 kg → 75.0 kg
+            </span>
+            <span class="px-2.5 py-0.5 text-[11px] font-mono font-semibold uppercase tracking-wider rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/30">
+              Google Calendar & Drive Synced
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">
+            10-Mission Weekdays (Sun–Thu) • Friday British Council & Parents • Saturday Padel & Gym • Duolingo German & OMAD
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Status Controls -->
+      <div class="flex items-center gap-3 flex-wrap">
+        <!-- Day Counter -->
+        <div class="flex items-center gap-1.5 bg-slate-900/90 border border-white/10 rounded-xl px-3 py-1.5">
+          <span class="text-xs text-slate-400 font-medium">Protocol Day</span>
+          <button onclick="changeProtocolDay(-1)" class="w-6 h-6 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-mono transition" title="Previous Day">-</button>
+          <span id="protocolDayDisplay" class="font-mono font-bold text-sm text-white px-1.5">1 / 90</span>
+          <button onclick="changeProtocolDay(1)" class="w-6 h-6 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center text-xs font-mono transition" title="Next Day">+</button>
+        </div>
+
+        <!-- Streak Pill -->
+        <div class="flex items-center gap-2 bg-gradient-to-r from-amber-500/15 to-rose-500/15 border border-amber-500/30 rounded-xl px-3.5 py-1.5">
+          <span class="text-amber-400 text-sm">🔥</span>
+          <div>
+            <div class="text-[10px] font-mono uppercase tracking-wider text-amber-300/80">Active Streak</div>
+            <div id="activeStreakHeader" class="font-mono font-bold text-xs text-amber-300">Day 1 Launch</div>
+          </div>
+        </div>
+
+        <!-- Reset Day -->
+        <button onclick="resetCurrentScheduleChecks()" class="px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-xs font-medium text-slate-300 border border-white/10 transition">
+          Reset Day Checks
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-6 pt-6 space-y-6">
+
+    <!-- 1. WEARABLE TELEMETRY & KPI BRIDGE (SAMSUNG HEALTH / GALAXY WATCH / GOOGLE FIT) -->
+    <section class="glass-card rounded-2xl p-5 border border-teal-500/25 relative overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300 text-lg">
+            ⌚
+          </div>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h2 class="font-display font-bold text-base text-white">
+                Samsung Health • Galaxy Watch • Google Fit Telemetry Bridge
+              </h2>
+              <span id="bleStatusBadge" class="px-2 py-0.5 text-[10px] font-mono rounded-full bg-slate-800 text-slate-300 border border-white/10">
+                Smartwatch: Manual / CSV Sync Mode
+              </span>
+            </div>
+            <p class="text-xs text-slate-400 mt-0.5">
+              Pair your Smartwatch via Web Bluetooth for live BPM or import/adjust your daily Samsung Health & Google Fit metrics below.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <button onclick="connectSmartwatchBLE()" class="px-3.5 py-2 rounded-xl bg-teal-500/20 hover:bg-teal-500/30 text-teal-200 border border-teal-500/40 text-xs font-semibold flex items-center gap-2 transition">
+            <span>📡</span> Pair Smartwatch (Live BLE HR)
+          </button>
+          <label class="px-3.5 py-2 rounded-xl bg-violet-500/20 hover:bg-violet-500/30 text-violet-200 border border-violet-500/40 text-xs font-semibold flex items-center gap-2 cursor-pointer transition">
+            <span>📥</span> Import Samsung Health / Fit CSV
+            <input type="file" id="healthCsvInput" accept=".csv,.json" class="hidden" onchange="handleHealthFileImport(event)" />
+          </label>
+        </div>
+      </div>
+
+      <!-- 5 Wearable & Body/Income KPI Widgets -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4">
+        <!-- Watch Steps -->
+        <div class="bg-slate-900/75 border border-white/10 rounded-xl p-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase text-slate-400">Daily Steps (Watch)</span>
+            <span class="text-xs font-mono text-teal-400" id="stepsPctBadge">71%</span>
+          </div>
+          <div class="flex items-baseline justify-between mt-1">
+            <span id="stepsValueDisplay" class="font-mono font-bold text-xl text-white">8,500</span>
+            <span class="text-[11px] font-mono text-slate-400">/ 12,000</span>
+          </div>
+          <input id="stepsSlider" type="range" min="0" max="20000" step="100" value="8500" oninput="updateWearableMetric('steps', this.value)" class="w-full h-1.5 mt-2.5 bg-slate-800 rounded-lg cursor-pointer" />
+          <div class="flex justify-between mt-2 gap-1">
+            <button onclick="nudgeWearable('steps', -500)" class="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">-500</button>
+            <button onclick="nudgeWearable('steps', 500)" class="flex-1 py-1 rounded bg-teal-500/20 hover:bg-teal-500/30 text-[10px] font-mono text-teal-300">+500</button>
+            <button onclick="nudgeWearable('steps', 1500)" class="flex-1 py-1 rounded bg-teal-500/20 hover:bg-teal-500/30 text-[10px] font-mono text-teal-300">+1.5k</button>
+          </div>
+        </div>
+
+        <!-- Active Burn -->
+        <div class="bg-slate-900/75 border border-white/10 rounded-xl p-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase text-slate-400">Active Burn (Samsung)</span>
+            <span class="text-xs font-mono text-rose-400" id="burnPctBadge">83%</span>
+          </div>
+          <div class="flex items-baseline justify-between mt-1">
+            <span id="burnValueDisplay" class="font-mono font-bold text-xl text-white">750 kcal</span>
+            <span class="text-[11px] font-mono text-slate-400">/ 900 kcal</span>
+          </div>
+          <input id="burnSlider" type="range" min="100" max="1800" step="25" value="750" oninput="updateWearableMetric('burn', this.value)" class="w-full h-1.5 mt-2.5 bg-slate-800 rounded-lg cursor-pointer" />
+          <div class="flex justify-between mt-2 gap-1">
+            <button onclick="nudgeWearable('burn', -50)" class="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">-50</button>
+            <button onclick="nudgeWearable('burn', 50)" class="flex-1 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 text-[10px] font-mono text-rose-300">+50</button>
+            <button onclick="nudgeWearable('burn', 150)" class="flex-1 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 text-[10px] font-mono text-rose-300">+150</button>
+          </div>
+        </div>
+
+        <!-- Zone 2 Jogging BPM -->
+        <div class="bg-slate-900/75 border border-white/10 rounded-xl p-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase text-slate-400">Zone 2 Jogging HR</span>
+            <span id="hrZoneBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">OPTIMAL ZONE 2</span>
+          </div>
+          <div class="flex items-baseline justify-between mt-1">
+            <span id="hrValueDisplay" class="font-mono font-bold text-xl text-white">143 BPM</span>
+            <span class="text-[11px] font-mono text-teal-300">138–149</span>
+          </div>
+          <input id="hrSlider" type="range" min="110" max="175" step="1" value="143" oninput="updateWearableMetric('hr', this.value)" class="w-full h-1.5 mt-2.5 bg-slate-800 rounded-lg cursor-pointer" />
+          <div class="flex justify-between mt-2 gap-1">
+            <button onclick="nudgeWearable('hr', -2)" class="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">-2 BPM</button>
+            <button onclick="updateWearableMetric('hr', 144)" class="flex-1 py-1 rounded bg-teal-500/20 hover:bg-teal-500/30 text-[10px] font-mono text-teal-300">144 BPM</button>
+            <button onclick="nudgeWearable('hr', 2)" class="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">+2 BPM</button>
+          </div>
+        </div>
+
+        <!-- Sleep Duration & Recovery -->
+        <div class="bg-slate-900/75 border border-white/10 rounded-xl p-3.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-mono uppercase text-slate-400">Sleep (Watch Sync)</span>
+            <span class="text-xs font-mono text-violet-300" id="sleepScoreBadge">Score: 86</span>
+          </div>
+          <div class="flex items-baseline justify-between mt-1">
+            <span id="sleepValueDisplay" class="font-mono font-bold text-xl text-white">7.0 hrs</span>
+            <span class="text-[11px] font-mono text-slate-400">Target: 6.5–7.5h</span>
+          </div>
+          <input id="sleepSlider" type="range" min="4" max="10" step="0.25" value="7.0" oninput="updateWearableMetric('sleep', this.value)" class="w-full h-1.5 mt-2.5 bg-slate-800 rounded-lg cursor-pointer" />
+          <div class="flex justify-between mt-2 gap-1">
+            <button onclick="nudgeWearable('sleep', -0.5)" class="flex-1 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">-0.5h</button>
+            <button onclick="nudgeWearable('sleep', 0.5)" class="flex-1 py-1 rounded bg-violet-500/20 hover:bg-violet-500/30 text-[10px] font-mono text-violet-300">+0.5h</button>
+          </div>
+        </div>
+
+        <!-- Body Weight (102.0 kg -> 75.0 kg) & BI Freelance Daily Income -->
+        <div class="bg-slate-900/75 border border-white/10 rounded-xl p-3.5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-mono uppercase text-slate-400">Weight & BI Income</span>
+              <span id="weightLossPctBadge" class="text-[10px] font-mono text-rose-400">-0.0 / -27.0 kg</span>
+            </div>
+            <div class="flex items-center justify-between mt-1">
+              <div>
+                <div class="text-[10px] text-slate-400">Start 102 → 75kg</div>
+                <div id="weightDisplay" class="font-mono font-bold text-base text-white">102.0 kg</div>
+              </div>
+              <div class="text-right">
+                <div class="text-[10px] text-slate-400">BI Daily ($30-$50)</div>
+                <div id="incomeDisplay" class="font-mono font-bold text-base text-emerald-400">$40</div>
+              </div>
+            </div>
+            <!-- Live Progress Bar to 75.0 kg -->
+            <div class="w-full bg-slate-800 h-1.5 rounded-full mt-2 overflow-hidden">
+              <div id="weightProgressBar" class="bg-gradient-to-r from-rose-500 to-emerald-400 h-full transition-all duration-300" style="width: 2%"></div>
+            </div>
+          </div>
+          <div class="grid grid-cols-4 gap-1 mt-2">
+            <button onclick="adjustWeight(-0.2)" class="py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-rose-300">-0.2kg</button>
+            <button onclick="adjustWeight(0.2)" class="py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">+0.2kg</button>
+            <button onclick="adjustIncome(-5)" class="py-1 rounded bg-slate-800 hover:bg-slate-700 text-[10px] font-mono text-slate-300">-$5</button>
+            <button onclick="adjustIncome(10)" class="py-1 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-[10px] font-mono text-emerald-300">+$10</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DAY-OF-WEEK MASTER SELECTOR (SYNCED TO WORKOUTPLAN WORKBOOK + SCHEDULE MODES) -->
+    <section class="glass-card rounded-2xl p-5">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+        <div>
+          <span class="text-[11px] font-mono uppercase tracking-wider text-rose-400 font-semibold">
+            7-Day Master Controller • Today: Tuesday, Nov 17, 2026 (Day 1)
+          </span>
+          <h2 class="font-display font-bold text-lg text-white mt-0.5">
+            Select Active Day of the Week (Sun – Sat)
+          </h2>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="activeScheduleModePill" class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/30">
+            Mode A: Weekday 10-Mission Protocol (Sun–Thu)
+          </span>
+        </div>
+      </div>
+
+      <!-- 7 Day Buttons -->
+      <div id="daySelectorBar" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- 3. MAIN WORKSPACE: DAILY SCHEDULE TIMELINE (LEFT) + WORKOUTPLAN, OMAD & DUOLINGO GERMAN (RIGHT) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT 5 COLS: DAILY SCHEDULE TIMELINE -->
+      <div class="lg:col-span-5 space-y-6">
+        <section class="glass-card rounded-2xl p-5">
+          <div class="flex items-center justify-between gap-2 pb-4 border-b border-white/10">
+            <div>
+              <span id="timelineSubtitle" class="text-[11px] font-mono uppercase tracking-wider text-teal-400">
+                10-Mission Protocol Timeline
+              </span>
+              <h3 id="timelineTitle" class="font-display font-bold text-lg text-white mt-0.5">
+                Tuesday Schedule (06:30 – 23:30)
+              </h3>
+            </div>
+            <div class="text-right">
+              <div class="text-[11px] font-mono text-slate-400">Daily Completion</div>
+              <div id="scheduleCompletionDisplay" class="font-mono font-bold text-base text-emerald-400">0 / 10 (0%)</div>
+            </div>
+          </div>
+
+          <!-- Timeline List -->
+          <div id="scheduleTimelineContainer" class="space-y-2.5 mt-4 max-h-[820px] overflow-y-auto custom-scrollbar pr-1">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT 7 COLS: DRIVE WORKOUTPLAN TABLE + ARABIC OMAD + DUOLINGO GERMAN ROADMAP -->
+      <div class="lg:col-span-7 space-y-6">
+
+        <!-- DRIVE WORKOUTPLAN EXERCISE TABLE -->
+        <section class="glass-card rounded-2xl p-5 border border-rose-500/25">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 text-[10px] font-mono uppercase rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  Drive / Workoutplan Sheet
+                </span>
+                <span id="workoutTimeWindowBadge" class="text-xs font-mono text-slate-400">
+                  Gym Window: 12:00 – 14:30
+                </span>
+              </div>
+              <h3 id="workoutDayTitle" class="font-display font-bold text-lg text-white mt-1">
+                Tuesday (Kettlebell Fat Loss & Legs - 8 Movements)
+              </h3>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <div class="text-right">
+                <div class="text-[10px] font-mono uppercase text-slate-400">Movements Done</div>
+                <div id="workoutProgressBadge" class="font-mono font-bold text-sm text-rose-400">0 / 8</div>
+              </div>
+              <button onclick="checkAllWorkoutMovements()" class="px-3 py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-500/30 text-xs font-semibold transition">
+                Mark All Done
+              </button>
+            </div>
+          </div>
+
+          <!-- Exercise Table -->
+          <div class="overflow-x-auto mt-4">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 text-[11px] font-mono uppercase text-slate-400">
+                  <th class="py-2.5 px-2 w-10">Done</th>
+                  <th class="py-2.5 px-2">Movement / Exercise (from Drive Workbook)</th>
+                  <th class="py-2.5 px-2 text-center">Start (kg)</th>
+                  <th class="py-2.5 px-2 text-center">End (kg)</th>
+                  <th class="py-2.5 px-2 text-right">Sets × Reps</th>
+                </tr>
+              </thead>
+              <tbody id="workoutTableBody" class="divide-y divide-white/5 text-xs">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- DRIVE ARABIC OMAD MEAL PLAN CARD -->
+        <section class="glass-card rounded-2xl p-5 border border-amber-500/25">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10">
+            <div>
+              <span class="px-2 py-0.5 text-[10px] font-mono uppercase rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                OMAD Nutrition Protocol • نظام الوجبة الواحدة (15:00 – 17:30)
+              </span>
+              <h3 id="omadTitleDisplay" class="font-display font-bold text-lg text-white mt-1">
+                كباب حلة وبامية باللحم (Kebab Halla & Okra Stew)
+              </h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="px-3 py-1.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-center">
+                <div class="text-[10px] font-mono text-amber-300/80">CALORIES</div>
+                <div id="omadCaloriesBadge" class="font-mono font-bold text-sm text-amber-300">1350 kcal</div>
+              </div>
+              <div class="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-center">
+                <div class="text-[10px] font-mono text-emerald-300/80">PROTEIN</div>
+                <div id="omadProteinBadge" class="font-mono font-bold text-sm text-emerald-300">102g</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 mt-4 rtl-box text-right">
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="text-xs font-bold text-rose-400 mb-1">🥩 مصدر البروتين الأساسي</div>
+              <p id="omadProteinSource" class="text-sm text-slate-100 leading-relaxed"></p>
+            </div>
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="text-xs font-bold text-amber-400 mb-1">🍚 النشويات والخضار المطبوخ</div>
+              <p id="omadCarbsVeg" class="text-sm text-slate-100 leading-relaxed"></p>
+            </div>
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="text-xs font-bold text-teal-400 mb-1">🥗 السلطة والدهون الصحية</div>
+              <p id="omadSaladFats" class="text-sm text-slate-100 leading-relaxed"></p>
+            </div>
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="text-xs font-bold text-violet-400 mb-1">🍓 بعد الوجبة / الفاكهة</div>
+              <p id="omadPostMeal" class="text-sm text-slate-100 leading-relaxed"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- DUOLINGO GERMAN FREE COURSE CURRICULUM CARD (18:30 - 19:30 BLOCK) -->
+        <section class="glass-card rounded-2xl p-5 border border-sky-500/25">
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/10">
+            <div>
+              <span class="px-2 py-0.5 text-[10px] font-mono uppercase rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                Mission 8 • Daily 18:30 – 19:30 Free Curriculum
+              </span>
+              <h3 class="font-display font-bold text-base text-white mt-1">
+                Duolingo German Language Free Course Roadmap (A1 → B1 Track)
+              </h3>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg bg-sky-500/15 border border-sky-500/30 font-mono text-xs text-sky-300">
+              60 Mins / Day
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4 text-xs">
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="font-mono text-[11px] font-bold text-sky-400">01. DUOLINGO ACTIVE SPRINT (25 MIN)</div>
+              <p class="text-slate-300 mt-1.5 leading-relaxed">
+                Complete <strong>2–3 Crown Levels</strong> daily on Duolingo German. Prioritize listening exercises, word-bank recall, and protecting your daily Duolingo streak alongside your 90-day streak.
+              </p>
+            </div>
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="font-mono text-[11px] font-bold text-violet-400">02. GRAMMAR & ARTICLES (20 MIN)</div>
+              <p class="text-slate-300 mt-1.5 leading-relaxed">
+                Drill core verb conjugations (<em>haben, sein, werden</em>, modal verbs), noun genders (<strong>der / die / das</strong>), and German V2 sentence structure using free DW Nicos Weg notes.
+              </p>
+            </div>
+            <div class="bg-slate-900/80 border border-white/10 rounded-xl p-3.5">
+              <div class="font-mono text-[11px] font-bold text-teal-400">03. SPEAKING & FLASHCARDS (15 MIN)</div>
+              <p class="text-slate-300 mt-1.5 leading-relaxed">
+                Read newly learned sentences aloud, practice clinical/medical & daily conversational vocabulary flashcards, and shadow native German audio pronunciation.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- 4. WEEKLY STREAK ANALYTICS & 7-DAY CONSISTENCY MATRIX (SUN - SAT) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Weekly Bar Chart -->
+      <section class="lg:col-span-5 glass-card rounded-2xl p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between pb-3 border-b border-white/10">
+            <div>
+              <span class="text-[11px] font-mono uppercase tracking-wider text-violet-400">Weekly Streak Analytics</span>
+              <h3 class="font-display font-bold text-base text-white mt-0.5">Sun – Sat Protocol Adherence</h3>
+            </div>
+            <span id="weeklyAvgBadge" class="font-mono font-bold text-sm text-emerald-400">Day 1 Active</span>
+          </div>
+
+          <div id="weeklyBarsContainer" class="grid grid-cols-7 gap-2.5 pt-6 pb-2 items-end h-52">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-slate-400">
+          <span>Target Threshold: <strong class="text-teal-300 font-mono">85%+ Daily</strong></span>
+          <span class="font-mono text-slate-300">Start Date: Nov 17, 2026</span>
+        </div>
+      </section>
+
+      <!-- 7-Day x 10-Mission Habit Matrix -->
+      <section class="lg:col-span-7 glass-card rounded-2xl p-5">
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
+          <div>
+            <span class="text-[11px] font-mono uppercase tracking-wider text-rose-400">Interactive Weekly Matrix</span>
+            <h3 class="font-display font-bold text-base text-white mt-0.5">10 Core Protocol Missions × 7 Days (Sun – Sat)</h3>
+          </div>
+          <span class="text-xs text-slate-400">Click any cell to log daily completion</span>
+        </div>
+
+        <div class="overflow-x-auto mt-3">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-white/10 text-[11px] font-mono uppercase text-slate-400">
+                <th class="py-2 px-2">Core Mission Pillar</th>
+                <th class="py-2 px-2 text-center">Sun</th>
+                <th class="py-2 px-2 text-center">Mon</th>
+                <th class="py-2 px-2 text-center text-sky-300">Tue ★</th>
+                <th class="py-2 px-2 text-center">Wed</th>
+                <th class="py-2 px-2 text-center">Thu</th>
+                <th class="py-2 px-2 text-center text-amber-300">Fri</th>
+                <th class="py-2 px-2 text-center text-teal-300">Sat</th>
+                <th class="py-2 px-2 text-right">Streak</th>
+              </tr>
+            </thead>
+            <tbody id="habitMatrixBody" class="divide-y divide-white/5 text-xs">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <script>
+    // =========================================================================
+    // 1. EXACT DATA FROM GOOGLE DRIVE "Workoutplan" (Fun Folder) & 10-MISSION SCHEDULES
+    // =========================================================================
+    const DAYS_ORDER = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+    const DAY_META = {
+      sun: {
+        short: 'SUN',
+        name: 'Sunday',
+        arabicDay: 'الأحد',
+        modeLabel: 'Mode A: Weekday 10-Mission Protocol (Sun–Thu)',
+        gymWindow: '12:00 – 14:30 (2.5 Hours)',
+        workoutTitle: 'Sunday (Kettlebell Fat Loss & Legs - 8 Movements)',
+        exercises: [
+          { name: 'Single-Arm Alternating Swings', start: '8', end: '16', reps: '5 sets × 20 reps' },
+          { name: 'Kettlebell Goblet Squat with Pulse', start: '12', end: '20', reps: '4 sets × 15 reps' },
+          { name: 'Kettlebell Clean to Squat Press', start: '8', end: '16', reps: '4 sets × 10 reps/side' },
+          { name: 'Kettlebell High Pull to Goblet March', start: '10', end: '18', reps: '4 sets × 45 sec' },
+          { name: 'Kettlebell Snatch to Overhead Carry', start: '8', end: '14', reps: '4 sets × 10 reps/side' },
+          { name: 'Kettlebell RDL to Calf Raise', start: '12', end: '20', reps: '4 sets × 12-15 reps' },
+          { name: 'Leg Press High & Wide', start: '60', end: '100', reps: '4 sets × 10-12 reps' },
+          { name: 'Lying Hamstring Leg Curls', start: '25', end: '45', reps: '3 sets × 12-15 reps' }
+        ],
+        omad: {
+          mealName: 'سمك مشوي بالردة إسكندراني (Alexandrian Grilled Fish)',
+          proteinSource: 'سمكة بلطي كبيرة أو قاروص مشوي بالردة (~350 جرام كاملة)',
+          carbsVeg: '4 ملاعق أرز صيادية بني فقط + ملعقتين كبار طحينة بالليمون',
+          saladFats: 'طبق جرجير وفجل وسلطة خضراء غنية بالليمون',
+          postMeal: 'كوب شاي أخضر بالنعناع + برتقالة طازجة',
+          calories: 1250,
+          protein: 95
+        }
+      },
+      mon: {
+        short: 'MON',
+        name: 'Monday',
+        arabicDay: 'الإثنين',
+        modeLabel: 'Mode A: Weekday 10-Mission Protocol (Sun–Thu)',
+        gymWindow: '12:00 – 14:30 (2.5 Hours)',
+        workoutTitle: 'Monday (Upper Cable Conditioning - Back/Tri & Chest/Bi)',
+        exercises: [
+          { name: 'Cable Neutral-Grip Lat Pulldown', start: '10', end: '20', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Rope Tricep Pushdown', start: '5', end: '12', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Low-to-High Chest Scoops', start: '5', end: '10', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Supinated Bicep Curls', start: '5', end: '10', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Seated High Row & Face Pull', start: '8', end: '15', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Overhead Tricep Rope Extension', start: '5', end: '10', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Standing Chest Press to Bicep Curls', start: '5', end: '10', reps: '3 sets × 15-20 reps' },
+          { name: 'Cable Lateral Deltoid Raises', start: '5', end: '10', reps: '3 sets × 15-20 reps' }
+        ],
+        omad: {
+          mealName: 'كفتة مشوية وبطاطا حلوة (Grilled Kofta & Sweet Potato)',
+          proteinSource: '220–250 جرام كفتة لحم بقري مشوية قليلة الدهن بالبقدونس',
+          carbsVeg: 'حبة بطاطا حلوة مشوية متوسطة + خضار سوتيه بالبخار',
+          saladFats: 'سلطة خضراء بلدي بالبقدونس والجرجير والليمون + ملعقة طحينة',
+          postMeal: 'كوب زبادي يوناني + حفنة فراولة أو توت',
+          calories: 1350,
+          protein: 100
+        }
+      },
+      tue: {
+        short: 'TUE',
+        name: 'Tuesday',
+        arabicDay: 'الثلاثاء (Today)',
+        modeLabel: 'Mode A: Weekday 10-Mission Protocol (Sun–Thu)',
+        gymWindow: '12:00 – 14:30 (2.5 Hours)',
+        workoutTitle: 'Tuesday (Kettlebell Fat Loss & Legs - 8 Movements)',
+        exercises: [
+          { name: 'KB Romanian Deadlift to Upright Row', start: '12', end: '20', reps: '4 sets × 15 reps' },
+          { name: 'KB Goblet Reverse Lunges', start: '10', end: '16', reps: '4 sets × 12 reps/leg' },
+          { name: 'KB Russian Twists', start: '8', end: '12', reps: '4 sets × 20 reps' },
+          { name: 'KB Sumo Deadlift High Pull', start: '12', end: '24', reps: '4 sets × 15 reps' },
+          { name: 'KB Halo to Overhead Press', start: '8', end: '12', reps: '4 sets × 10 reps/dir' },
+          { name: 'KB Suitcase Deadlift', start: '12', end: '20', reps: '4 sets × 10 reps/side' },
+          { name: 'Hack Squat', start: '30', end: '55', reps: '3 sets × 10-12 reps' },
+          { name: 'Seated Leg Extensions', start: '45', end: '55', reps: '3 sets × 15 reps' }
+        ],
+        omad: {
+          mealName: 'كباب حلة وبامية باللحم (Kebab Halla & Okra Stew)',
+          proteinSource: '250 جرام مكعبات لحم بقري صافي مطهو كباب حلة',
+          carbsVeg: 'طبق بامية مطبوخة خفيفة + نصف رغيف بلدي أو 4 ملاعق أرز',
+          saladFats: 'سلطة طماطم وخيار وجرجير وبصل أحمر بالليمون وزيت الزيتون',
+          postMeal: 'ثمرة جوافة أو برتقالة + شاي أخضر بالنعناع',
+          calories: 1350,
+          protein: 102
+        }
+      },
+      wed: {
+        short: 'WED',
+        name: 'Wednesday',
+        arabicDay: 'الأربعاء',
+        modeLabel: 'Mode A: Weekday 10-Mission Protocol (Sun–Thu)',
+        gymWindow: '12:00 – 14:30 (2.5 Hours)',
+        workoutTitle: 'Wednesday (Glute Focus - 8 Movements)',
+        exercises: [
+          { name: 'Barbell / Smith Glute Bridge', start: '40', end: '70', reps: '4 sets × 12 reps' },
+          { name: 'Cable Pull-Throughs', start: '40', end: '60', reps: '3 sets × 12-15 reps' },
+          { name: 'Deficit Dumbbell Reverse Lunges', start: '20', end: '30', reps: '3 sets × 10-12 reps' },
+          { name: 'Cable Kneeling Donkey Kickbacks', start: '40', end: '55', reps: '3 sets × 15 reps' },
+          { name: 'Hyperextensions (Glute Bias)', start: '10', end: '20', reps: '3 sets × 15 reps' },
+          { name: 'Seated Machine Hip Adduction', start: '82', end: '96', reps: '3 sets × 15-20 reps' },
+          { name: 'Banded Clamshells & Lateral Monster Walks', start: '0', end: '0', reps: '3 sets × 25 reps' },
+          { name: 'Cross-Body Cable Kickbacks', start: '15', end: '25', reps: '3 sets × 15 reps' }
+        ],
+        omad: {
+          mealName: 'شوربة عدس غنية بالبروتين والبيض المسلوق (Lentil Soup & Boiled Eggs)',
+          proteinSource: 'طبق كبير شوربة عدس أصفر + 3 بيضات مسلوقة + 100 جرام جبنة قريش',
+          carbsVeg: 'نصف رغيف بلدي محمص + خضار مشوي (كوسة وجزر وبصل)',
+          saladFats: 'طبق جرجير وبصل أخضر وليمون وملعقة صغيرة زيت زيتون',
+          postMeal: 'علبة زبادي + تفاحة أو رمان',
+          calories: 1200,
+          protein: 88
+        }
+      },
+      thu: {
+        short: 'THU',
+        name: 'Thursday',
+        arabicDay: 'الخميس',
+        modeLabel: 'Mode A: Weekday 10-Mission Protocol (Sun–Thu)',
+        gymWindow: '12:00 – 14:30 (2.5 Hours)',
+        workoutTitle: 'Thursday (Kettlebell Fat Loss & Legs - 8 Movements)',
+        exercises: [
+          { name: 'KB Double-Arm Explosive Swings', start: '12', end: '20', reps: '4 sets × 25 reps' },
+          { name: 'KB Thrusters', start: '8', end: '14', reps: '4 sets × 12 reps' },
+          { name: 'KB Figure-8 through Legs', start: '10', end: '16', reps: '4 sets × 16 reps' },
+          { name: 'KB Windmills', start: '6', end: '10', reps: '4 sets × 8 reps/side' },
+          { name: 'KB Lateral Step-Out Swings', start: '10', end: '16', reps: '4 sets × 20 reps' },
+          { name: 'KB Plank Pull-Through', start: '8', end: '14', reps: '4 sets × 10 reps/side' },
+          { name: 'Dumbbell Stiff-Leg Deadlift', start: '25', end: '45', reps: '4 sets × 10-12 reps' },
+          { name: 'Donkey / Standing Calf Raises', start: '30', end: '55', reps: '3 sets × 15-20 reps' }
+        ],
+        omad: {
+          mealName: 'صينية فراخ بالخضار المشوي (Baked Chicken & Vegetable Tray)',
+          proteinSource: '250 جرام صدور أو أوراك فراخ مشوية في الفرن بدون جلد',
+          carbsVeg: 'كوسة وبروكلي وجزر وبطاطس صغيرة في الفرن + نصف رغيف بلدي',
+          saladFats: 'سلطة خضراء كبيرة بالليمون وخل التفاح وزيت الزيتون',
+          postMeal: 'زبادي يوناني بالقرفة + حفنة فراولة',
+          calories: 1350,
+          protein: 105
+        }
+      },
+      fri: {
+        short: 'FRI',
+        name: 'Friday',
+        arabicDay: 'الجمعة',
+        modeLabel: 'Mode B: Friday Protocol (British Council + Parents + Friends)',
+        gymWindow: 'Rest Day / Travel & Family',
+        workoutTitle: 'Friday (British Council Cairo & Family Visits)',
+        exercises: [
+          { name: 'Commute British Council in Cairo', start: '—', end: '—', reps: '05:30 – 09:30' },
+          { name: 'Dev Plan II (Studying & Academic Focus)', start: '—', end: '—', reps: '09:30 – 11:30' },
+          { name: 'Commute to Kafr El-Zayat', start: '—', end: '—', reps: '11:30 – 15:00' },
+          { name: 'Visiting Parents', start: '—', end: '—', reps: '15:00 – 17:00' },
+          { name: 'Visiting Parents-in-Law', start: '—', end: '—', reps: '17:00 – 18:00' },
+          { name: 'Friends Time & Social Evening', start: '—', end: '—', reps: '18:00 – 22:00' }
+        ],
+        omad: {
+          mealName: 'وجبة الجبنة القريش والبيض والعيش البلدي (Cottage Cheese, Eggs & Baladi Bread)',
+          proteinSource: '250 جرام جبنة قريش بزيت الزيتون + 3 بيضات مسلوقة أو أومليت خفيف',
+          carbsVeg: 'رغيف عيش بلدي كامل + طبق فول صغير بالليمون والكمون',
+          saladFats: 'طماطم وخيار وفلفل أخضر وجرجير + ملعقة زيت حار أو زيت زيتون',
+          postMeal: 'كوب شاي بالنعناع + ثمرة فاكهة طازجة',
+          calories: 1250,
+          protein: 92
+        }
+      },
+      sat: {
+        short: 'SAT',
+        name: 'Saturday',
+        arabicDay: 'السبت',
+        modeLabel: 'Mode C: Saturday Protocol (Gym + Padel Tennis + Family)',
+        gymWindow: '12:30 – 14:30 Gym • 17:30 – 19:30 Padel',
+        workoutTitle: 'Saturday (Glute Focus Gym Session + Padel Tennis)',
+        exercises: [
+          { name: 'Barbell Hip Thrust', start: '70', end: '100', reps: '4 sets × 10-12 reps' },
+          { name: 'Smith Machine Sumo Squats', start: '30', end: '50', reps: '3 sets × 10-12 reps' },
+          { name: 'Barbell Romanian Deadlift', start: '30', end: '55', reps: '4 sets × 10-12 reps' },
+          { name: 'Dumbbell Bulgarian Split Squats', start: '10', end: '18', reps: '3 sets × 10-12 reps' },
+          { name: 'Cable Glute Kickbacks', start: '15', end: '25', reps: '3 sets × 15 reps' },
+          { name: 'Cable 45-Degree Hip Abduction', start: '15', end: '25', reps: '3 sets × 15 reps' },
+          { name: 'Seated Machine Hip Abduction', start: '45', end: '70', reps: '4 sets × 15-20 reps' },
+          { name: 'Dumbbell Frog Pumps', start: '12', end: '20', reps: '4 sets × 15-20 reps' }
+        ],
+        omad: {
+          mealName: 'فراخ مشوية وملوخية خفيفة (Grilled Chicken & Light Molokhia)',
+          proteinSource: '250 جرام صدور أو أوراك فراخ مشوية بدون جلد',
+          carbsVeg: 'رغيف عيش بلدي كامل + طبق ملوخية خفيفة قليلة الدسم',
+          saladFats: 'سلطة بلدي كبيرة (طماطم وخيار وجرجير وليمون وملعقة زيت زيتون)',
+          postMeal: 'علبة زبادي بلدي أو يوناني + رمان أو فراولة',
+          calories: 1400,
+          protein: 105
+        }
+      }
+    };
+
+    // 10-Mission Schedule blocks per mode
+    function getScheduleBlocksForDay(dayKey) {
+      if (dayKey === 'fri') {
+        return [
+          { id: 'fri_bc_commute', time: '05:30 – 09:30', title: 'Commute British Council in Cairo', desc: 'Early morning travel from your base to the British Council in Cairo.', tag: 'TRAVEL', color: 'slate' },
+          { id: 'fri_study', time: '09:30 – 11:30', title: 'Dev Plan II (Studying)', desc: 'Focused academic and professional upskilling session (health informatics, data analytics).', tag: 'STUDY', color: 'violet' },
+          { id: 'fri_kafr_commute', time: '11:30 – 15:00', title: 'Commute to Kafr El-Zayat', desc: 'Travel journey back from Cairo to Kafr El-Zayat.', tag: 'TRAVEL', color: 'slate' },
+          { id: 'fri_parents', time: '15:00 – 17:00', title: 'Visiting Parents', desc: 'Dedicated family time visiting and checking in on your parents.', tag: 'FAMILY', color: 'emerald' },
+          { id: 'fri_in_law', time: '17:00 – 18:00', title: 'Visiting Parents-in-Law', desc: 'Family visit with your parents-in-law to maintain strong family ties.', tag: 'FAMILY', color: 'emerald' },
+          { id: 'fri_friends', time: '18:00 – 22:00', title: 'Friends Time', desc: 'Social evening out with friends, relaxing and unwinding after a productive week.', tag: 'SOCIAL', color: 'amber' }
+        ];
+      }
+      if (dayKey === 'sat') {
+        return [
+          { id: 'sat_morning', time: '10:30 – 11:30', title: 'Morning Routine', desc: 'Washing, cream application, and morning coffee to start Saturday smoothly.', tag: 'MORNING', color: 'teal' },
+          { id: 'sat_gym_commute', time: '11:30 – 12:30', title: 'Commute to Gym', desc: 'Travel from home to the gym facility.', tag: 'TRANSIT', color: 'slate' },
+          { id: 'sat_gym', time: '12:30 – 14:30', title: 'Gym Session', desc: 'Saturday Glute Focus Workout (Barbell Hip Thrusts, Sumo Squats, RDLs, Bulgarian Splits).', tag: 'GYM', color: 'rose' },
+          { id: 'sat_home_commute', time: '14:30 – 15:00', title: 'Commute Home', desc: 'Return travel home from the gym.', tag: 'TRANSIT', color: 'slate' },
+          { id: 'sat_omad', time: '15:00 – 17:00', title: 'OMAD and Shower', desc: 'Post-workout shower and nourishing weekend OMAD meal (Grilled Chicken & Light Molokhia).', tag: 'OMAD', color: 'amber' },
+          { id: 'sat_club_commute', time: '17:00 – 17:30', title: 'Commute to Club', desc: 'Travel to the sporting club for weekend recreation.', tag: 'TRANSIT', color: 'slate' },
+          { id: 'sat_padel', time: '17:30 – 19:30', title: 'Playing Padel Tennis', desc: 'High-energy recreational match playing Padel Tennis for agility, cardio, and fun.', tag: 'PADEL', color: 'sky' },
+          { id: 'sat_family', time: '19:30 – 23:00', title: 'Family Time', desc: 'Relaxed Saturday night family gathering and restful end to the weekend.', tag: 'FAMILY', color: 'emerald' }
+        ];
+      }
+      // Weekdays: Sun - Thu (10-Mission Schedule)
+      const meta = DAY_META[dayKey];
+      return [
+        { id: `${dayKey}_m1`, time: '06:30 – 07:30', title: 'Morning Routine', desc: 'Washing, cream application, and morning coffee to build alertness and center focus before work.', tag: 'MISSION 1', color: 'teal' },
+        { id: `${dayKey}_m2`, time: '07:30 – 11:30', title: 'Dev Plan 1', desc: 'Dedicated deep-work block focused on bidding, client communication, and project delivery on Fiverr and Upwork ($30–$50/day target).', tag: 'MISSION 2', color: 'violet' },
+        { id: `${dayKey}_m3`, time: '11:30 – 12:00', title: 'Commute to the Gym', desc: 'Transition time from workspace to the gym, mental preparation, and pre-workout hydration.', tag: 'MISSION 3', color: 'slate' },
+        { id: `${dayKey}_m4`, time: '12:00 – 14:30', title: 'Gym Workout', desc: `${meta.workoutTitle} (From your Workoutplan sheet on Google Drive).`, tag: 'MISSION 4', color: 'rose' },
+        { id: `${dayKey}_m5`, time: '14:30 – 15:00', title: 'Commute Home', desc: 'Post-workout travel back home, allowing heart rate to stabilize and preparing for recovery.', tag: 'MISSION 5', color: 'slate' },
+        { id: `${dayKey}_m6`, time: '15:00 – 17:30', title: 'Shower & OMAD', desc: `Post-gym hygiene & OMAD meal window: ${meta.omad.mealName} (${meta.omad.calories} kcal | ${meta.omad.protein}g Protein).`, tag: 'MISSION 6', color: 'amber' },
+        { id: `${dayKey}_m7`, time: '17:30 – 18:30', title: "Time with Lucinda & Commute to Gym", desc: 'Quality bonding time with your daughter Lucinda (karate, art projects & daily catch-up), followed by evening commute preparation.', tag: 'MISSION 7', color: 'rose' },
+        { id: `${dayKey}_m8`, time: '18:30 – 19:30', title: 'German Language Learning (Duolingo)', desc: '1-hour structured study block: 25m Duolingo (2–3 crowns), 20m verb conjugations & der/die/das noun genders, 15m pronunciation & flashcards.', tag: 'MISSION 8', color: 'sky' },
+        { id: `${dayKey}_m9`, time: '19:30 – 21:00', title: 'Jogging & Brisk Walk', desc: '90-minute fat-loss session: 30 minutes of continuous jogging in optimal fat-burning zone (138–149 BPM) + 60 minutes of steady brisk walking.', tag: 'MISSION 9', color: 'teal' },
+        { id: `${dayKey}_m10`, time: '21:00 – 23:30', title: 'Family Time & Study', desc: 'Relaxing evening with family, personal reading, technical upskilling, and sleep wind-down.', tag: 'MISSION 10', color: 'emerald' }
+      ];
+    }
+
+    const CORE_HABITS = [
+      { id: 'h_m1', name: 'Mission 1: Morning Routine & Coffee', badge: '06:30–07:30' },
+      { id: 'h_m2', name: 'Mission 2: Dev Plan 1 (Fiverr/Upwork)', badge: '07:30–11:30' },
+      { id: 'h_m3', name: 'Mission 3: Commute to Gym', badge: '11:30–12:00' },
+      { id: 'h_m4', name: 'Mission 4: Gym Workout (Drive Sheet)', badge: '12:00–14:30' },
+      { id: 'h_m5', name: 'Mission 5: Commute Home', badge: '14:30–15:00' },
+      { id: 'h_m6', name: 'Mission 6: Shower & OMAD Nutrition', badge: '15:00–17:30' },
+      { id: 'h_m7', name: "Mission 7: Lucinda's Time", badge: '17:30–18:30' },
+      { id: 'h_m8', name: 'Mission 8: German Study (Duolingo)', badge: '18:30–19:30' },
+      { id: 'h_m9', name: 'Mission 9: Jogging & Brisk Walk (90m)', badge: '19:30–21:00' },
+      { id: 'h_m10', name: 'Mission 10: Family Time & Study', badge: '21:00–23:30' }
+    ];
+
+    // =========================================================================
+    // 2. STATE MANAGEMENT (FRESH START NOV 17, 2026 - DAY 1 - 102.0 KG)
+    // =========================================================================
+    const STORAGE_KEY = 'meeda_90day_nov17_2026_102kg_start_v1';
+
+    const defaultState = {
+      protocolDay: 1,
+      selectedDay: 'tue', // Today is Tuesday, November 17, 2026
+      weight: 102.0,
+      dailyIncome: 40,
+      wearables: {
+        steps: 8500,
+        burn: 750,
+        hr: 143,
+        sleep: 7.0
+      },
+      scheduleChecks: {},
+      workoutChecks: {},
+      matrix: {
+        h_m1:  [false, false, true,  false, false, false, false],
+        h_m2:  [false, false, true,  false, false, false, false],
+        h_m3:  [false, false, false, false, false, false, false],
+        h_m4:  [false, false, false, false, false, false, false],
+        h_m5:  [false, false, false, false, false, false, false],
+        h_m6:  [false, false, false, false, false, false, false],
+        h_m7:  [false, false, false, false, false, false, false],
+        h_m8:  [false, false, false, false, false, false, false],
+        h_m9:  [false, false, false, false, false, false, false],
+        h_m10: [false, false, false, false, false, false, false]
+      }
+    };
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return JSON.parse(JSON.stringify(defaultState));
+        const parsed = JSON.parse(raw);
+        return {
+          ...defaultState,
+          ...parsed,
+          wearables: { ...defaultState.wearables, ...(parsed.wearables || {}) },
+          scheduleChecks: parsed.scheduleChecks || {},
+          workoutChecks: parsed.workoutChecks || {},
+          matrix: { ...defaultState.matrix, ...(parsed.matrix || {}) }
+        };
+      } catch (e) {
+        return JSON.parse(JSON.stringify(defaultState));
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    // =========================================================================
+    // 3. UI RENDERING FUNCTIONS
+    // =========================================================================
+    function renderAll() {
+      document.getElementById('protocolDayDisplay').textContent = `${state.protocolDay} / 90`;
+      renderWearables();
+      renderDaySelector();
+      renderScheduleTimeline();
+      renderWorkoutTable();
+      renderOmadCard();
+      renderWeeklyMatrixAndChart();
+    }
+
+    function renderWearables() {
+      const { steps, burn, hr, sleep } = state.wearables;
+      document.getElementById('stepsValueDisplay').textContent = Number(steps).toLocaleString();
+      document.getElementById('stepsSlider').value = steps;
+      const stepsPct = Math.min(100, Math.round((steps / 12000) * 100));
+      document.getElementById('stepsPctBadge').textContent = `${stepsPct}%`;
+
+      document.getElementById('burnValueDisplay').textContent = `${burn} kcal`;
+      document.getElementById('burnSlider').value = burn;
+      const burnPct = Math.min(100, Math.round((burn / 900) * 100));
+      document.getElementById('burnPctBadge').textContent = `${burnPct}%`;
+
+      document.getElementById('hrValueDisplay').textContent = `${hr} BPM`;
+      document.getElementById('hrSlider').value = hr;
+      const hrBadge = document.getElementById('hrZoneBadge');
+      if (hr >= 138 && hr <= 149) {
+        hrBadge.textContent = 'OPTIMAL ZONE 2';
+        hrBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300';
+      } else if (hr < 138) {
+        hrBadge.textContent = 'BELOW ZONE 2';
+        hrBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300';
+      } else {
+        hrBadge.textContent = 'ABOVE ZONE 2';
+        hrBadge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300';
+      }
+
+      document.getElementById('sleepValueDisplay').textContent = `${Number(sleep).toFixed(1)} hrs`;
+      document.getElementById('sleepSlider').value = sleep;
+      const sleepScore = Math.min(99, Math.max(55, Math.round((sleep / 7.5) * 92)));
+      document.getElementById('sleepScoreBadge').textContent = `Score: ${sleepScore}`;
+
+      document.getElementById('weightDisplay').textContent = `${state.weight.toFixed(1)} kg`;
+      const lost = Math.max(0, 102.0 - state.weight);
+      const totalToLose = 27.0; // 102.0 -> 75.0 kg
+      const progressPct = Math.min(100, Math.max(2, Math.round((lost / totalToLose) * 100)));
+      document.getElementById('weightLossPctBadge').textContent = `-${lost.toFixed(1)} / -27.0 kg`;
+      document.getElementById('weightProgressBar').style.width = `${progressPct}%`;
+      document.getElementById('incomeDisplay').textContent = `$${state.dailyIncome}`;
+    }
+
+    function renderDaySelector() {
+      const container = document.getElementById('daySelectorBar');
+      const activeMeta = DAY_META[state.selectedDay];
+      document.getElementById('activeScheduleModePill').textContent = activeMeta.modeLabel;
+
+      container.innerHTML = DAYS_ORDER.map(dayKey => {
+        const d = DAY_META[dayKey];
+        const isSelected = dayKey === state.selectedDay;
+        const blocks = getScheduleBlocksForDay(dayKey);
+        const doneCount = blocks.filter(b => state.scheduleChecks[b.id]).length;
+        const pct = Math.round((doneCount / blocks.length) * 100);
+
+        return `
+          <button onclick="selectDay('${dayKey}')"
+            class="text-left p-3 rounded-xl border transition-all ${
+              isSelected
+                ? 'bg-gradient-to-br from-rose-500/25 via-violet-500/20 to-slate-900 border-rose-500/60 shadow-lg shadow-rose-500/10'
+                : 'bg-slate-900/70 hover:bg-slate-800/80 border-white/10'
+            }">
+            <div class="flex items-center justify-between">
+              <span class="font-mono font-bold text-xs ${isSelected ? 'text-rose-300' : 'text-slate-300'}">${d.short} • ${d.arabicDay}</span>
+              <span class="text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                pct === 100 ? 'bg-emerald-500/20 text-emerald-300' : 'bg-slate-800 text-slate-400'
+              }">${pct}%</span>
+            </div>
+            <div class="font-display font-semibold text-xs text-white mt-1 truncate">${d.name}</div>
+            <div class="text-[10px] text-slate-400 truncate mt-0.5">${d.omad.mealName.split('(')[0]}</div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderScheduleTimeline() {
+      const dayKey = state.selectedDay;
+      const meta = DAY_META[dayKey];
+      const blocks = getScheduleBlocksForDay(dayKey);
+
+      document.getElementById('timelineSubtitle').textContent = meta.modeLabel;
+      document.getElementById('timelineTitle').textContent = `${meta.name} Schedule (${meta.arabicDay})`;
+
+      const doneCount = blocks.filter(b => state.scheduleChecks[b.id]).length;
+      const pct = Math.round((doneCount / blocks.length) * 100);
+      document.getElementById('scheduleCompletionDisplay').textContent = `${doneCount} / ${blocks.length} (${pct}%)`;
+
+      const colorMap = {
+        teal: 'border-teal-500/30 bg-teal-500/10 text-teal-300',
+        violet: 'border-violet-500/30 bg-violet-500/10 text-violet-300',
+        amber: 'border-amber-500/30 bg-amber-500/10 text-amber-300',
+        rose: 'border-rose-500/30 bg-rose-500/10 text-rose-300',
+        sky: 'border-sky-500/30 bg-sky-500/10 text-sky-300',
+        emerald: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300',
+        slate: 'border-slate-500/30 bg-slate-500/10 text-slate-300'
+      };
+
+      const container = document.getElementById('scheduleTimelineContainer');
+      container.innerHTML = blocks.map(block => {
+        const checked = !!state.scheduleChecks[block.id];
+        const badgeStyle = colorMap[block.color] || colorMap.slate;
+        return `
+          <div onclick="toggleScheduleBlock('${block.id}')"
+            class="group cursor-pointer p-3.5 rounded-xl border transition-all flex items-start gap-3.5 ${
+              checked
+                ? 'bg-emerald-950/25 border-emerald-500/35 opacity-85'
+                : 'bg-slate-900/75 hover:bg-slate-800/80 border-white/10'
+            }">
+            <div class="mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center text-xs font-bold transition ${
+              checked
+                ? 'bg-emerald-500 border-emerald-400 text-slate-950'
+                : 'border-slate-600 group-hover:border-rose-400 text-transparent'
+            }">
+              ✓
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2 flex-wrap">
+                <span class="font-mono text-xs font-semibold ${checked ? 'text-emerald-300' : 'text-rose-300'}">${block.time}</span>
+                <span class="px-2 py-0.5 text-[10px] font-mono uppercase rounded border ${badgeStyle}">${block.tag}</span>
+              </div>
+              <div class="font-display font-semibold text-sm text-white mt-1 ${checked ? 'line-through text-slate-400' : ''}">
+                ${block.title}
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5 leading-relaxed">${block.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderWorkoutTable() {
+      const dayKey = state.selectedDay;
+      const meta = DAY_META[dayKey];
+      document.getElementById('workoutDayTitle').textContent = meta.workoutTitle;
+      document.getElementById('workoutTimeWindowBadge').textContent = `Gym Window: ${meta.gymWindow}`;
+
+      const exercises = meta.exercises;
+      let doneCount = 0;
+      exercises.forEach((_, idx) => {
+        if (state.workoutChecks[`${dayKey}_ex_${idx}`]) doneCount++;
+      });
+      document.getElementById('workoutProgressBadge').textContent = `${doneCount} / ${exercises.length}`;
+
+      const tbody = document.getElementById('workoutTableBody');
+      tbody.innerHTML = exercises.map((ex, idx) => {
+        const key = `${dayKey}_ex_${idx}`;
+        const checked = !!state.workoutChecks[key];
+        return `
+          <tr onclick="toggleWorkoutMovement('${key}')" class="cursor-pointer hover:bg-white/5 transition ${checked ? 'bg-emerald-500/5' : ''}">
+            <td class="py-2.5 px-2">
+              <div class="w-5 h-5 rounded border flex items-center justify-center text-xs font-bold ${
+                checked ? 'bg-rose-500 border-rose-400 text-white' : 'border-slate-600 text-transparent'
+              }">✓</div>
+            </td>
+            <td class="py-2.5 px-2 font-medium ${checked ? 'line-through text-slate-400' : 'text-slate-100'}">
+              ${ex.name}
+            </td>
+            <td class="py-2.5 px-2 text-center font-mono text-slate-300">${ex.start}</td>
+            <td class="py-2.5 px-2 text-center font-mono text-teal-300 font-semibold">${ex.end}</td>
+            <td class="py-2.5 px-2 text-right font-mono text-rose-300">${ex.reps}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderOmadCard() {
+      const meta = DAY_META[state.selectedDay];
+      const omad = meta.omad;
+      document.getElementById('omadTitleDisplay').textContent = omad.mealName;
+      document.getElementById('omadCaloriesBadge').textContent = `${omad.calories} kcal`;
+      document.getElementById('omadProteinBadge').textContent = `${omad.protein}g Protein`;
+      document.getElementById('omadProteinSource').textContent = omad.proteinSource;
+      document.getElementById('omadCarbsVeg').textContent = omad.carbsVeg;
+      document.getElementById('omadSaladFats').textContent = omad.saladFats;
+      document.getElementById('omadPostMeal').textContent = omad.postMeal;
+    }
+
+    function renderWeeklyMatrixAndChart() {
+      const tbody = document.getElementById('habitMatrixBody');
+      tbody.innerHTML = CORE_HABITS.map(habit => {
+        const row = state.matrix[habit.id] || [false, false, false, false, false, false, false];
+        const streakCount = row.filter(Boolean).length;
+        return `
+          <tr class="hover:bg-white/5 transition">
+            <td class="py-2.5 px-2">
+              <div class="font-medium text-slate-200">${habit.name}</div>
+              <div class="text-[10px] font-mono text-slate-400">${habit.badge}</div>
+            </td>
+            ${row.map((val, dayIdx) => `
+              <td class="py-2.5 px-1.5 text-center">
+                <button onclick="toggleMatrixCell('${habit.id}', ${dayIdx})"
+                  class="w-7 h-7 rounded-lg font-mono text-xs font-bold transition ${
+                    val
+                      ? 'bg-gradient-to-br from-rose-500 to-violet-600 text-white shadow-sm shadow-rose-500/30'
+                      : 'bg-slate-800/90 hover:bg-slate-700 text-slate-500 border border-white/5'
+                  }">
+                  ${val ? '✓' : '·'}
+                </button>
+              </td>
+            `).join('')}
+            <td class="py-2.5 px-2 text-right font-mono font-bold text-emerald-400">${streakCount}/7</td>
+          </tr>
+        `;
+      }).join('');
+
+      // Calculate daily percentages for bar chart
+      const dayPercentages = DAYS_ORDER.map((_, dayIdx) => {
+        const completed = CORE_HABITS.reduce((acc, h) => acc + (state.matrix[h.id]?.[dayIdx] ? 1 : 0), 0);
+        return Math.round((completed / CORE_HABITS.length) * 100);
+      });
+
+      const todayPct = dayPercentages[2]; // Tuesday (Nov 17, 2026)
+      document.getElementById('weeklyAvgBadge').textContent = `Today: ${todayPct}%`;
+
+      const barsContainer = document.getElementById('weeklyBarsContainer');
+      barsContainer.innerHTML = DAYS_ORDER.map((dayKey, idx) => {
+        const pct = dayPercentages[idx];
+        const isSelected = dayKey === state.selectedDay;
+        const barColor = pct >= 85
+          ? 'from-teal-400 to-emerald-500'
+          : pct >= 50
+          ? 'from-violet-500 to-rose-500'
+          : pct > 0
+          ? 'from-sky-500 to-indigo-500'
+          : 'from-slate-700 to-slate-600';
+
+        return `
+          <div onclick="selectDay('${dayKey}')" class="cursor-pointer flex flex-col items-center h-full justify-end group">
+            <span class="font-mono text-[11px] font-bold ${isSelected ? 'text-rose-300' : 'text-slate-300'} mb-1.5">${pct}%</span>
+            <div class="w-full bg-slate-900/90 rounded-xl h-36 p-1 flex items-end border ${isSelected ? 'border-rose-500/50' : 'border-white/5'}">
+              <div class="w-full rounded-lg bg-gradient-to-t ${barColor} transition-all duration-300" style="height: ${Math.max(8, pct)}%"></div>
+            </div>
+            <span class="font-mono text-xs font-bold mt-2 ${isSelected ? 'text-rose-400' : 'text-slate-400'}">${DAY_META[dayKey].short}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =========================================================================
+    // 4. INTERACTIVE HANDLERS & SMARTWATCH BLUETOOTH / CSV IMPORT
+    // =========================================================================
+    function selectDay(dayKey) {
+      state.selectedDay = dayKey;
+      saveState();
+      renderAll();
+    }
+
+    function changeProtocolDay(delta) {
+      state.protocolDay = Math.min(90, Math.max(1, state.protocolDay + delta));
+      saveState();
+      renderAll();
+    }
+
+    function updateWearableMetric(key, val) {
+      state.wearables[key] = Number(val);
+      saveState();
+      renderWearables();
+    }
+
+    function nudgeWearable(key, delta) {
+      const current = Number(state.wearables[key] || 0);
+      state.wearables[key] = Math.max(0, Number((current + delta).toFixed(2)));
+      saveState();
+      renderWearables();
+    }
+
+    function adjustWeight(delta) {
+      state.weight = Math.max(60, Math.min(130, Number((state.weight + delta).toFixed(1))));
+      saveState();
+      renderWearables();
+    }
+
+    function adjustIncome(delta) {
+      state.dailyIncome = Math.max(0, state.dailyIncome + delta);
+      saveState();
+      renderWearables();
+    }
+
+    function toggleScheduleBlock(blockId) {
+      state.scheduleChecks[blockId] = !state.scheduleChecks[blockId];
+      saveState();
+      renderDaySelector();
+      renderScheduleTimeline();
+    }
+
+    function toggleWorkoutMovement(exKey) {
+      state.workoutChecks[exKey] = !state.workoutChecks[exKey];
+      saveState();
+      renderWorkoutTable();
+    }
+
+    function checkAllWorkoutMovements() {
+      const dayKey = state.selectedDay;
+      const exercises = DAY_META[dayKey].exercises;
+      const allChecked = exercises.every((_, idx) => state.workoutChecks[`${dayKey}_ex_${idx}`]);
+      exercises.forEach((_, idx) => {
+        state.workoutChecks[`${dayKey}_ex_${idx}`] = !allChecked;
+      });
+      saveState();
+      renderWorkoutTable();
+    }
+
+    function toggleMatrixCell(habitId, dayIdx) {
+      if (!state.matrix[habitId]) {
+        state.matrix[habitId] = [false, false, false, false, false, false, false];
+      }
+      state.matrix[habitId][dayIdx] = !state.matrix[habitId][dayIdx];
+      saveState();
+      renderWeeklyMatrixAndChart();
+    }
+
+    function resetCurrentScheduleChecks() {
+      const dayKey = state.selectedDay;
+      const blocks = getScheduleBlocksForDay(dayKey);
+      blocks.forEach(b => delete state.scheduleChecks[b.id]);
+      DAY_META[dayKey].exercises.forEach((_, idx) => delete state.workoutChecks[`${dayKey}_ex_${idx}`]);
+      saveState();
+      renderAll();
+    }
+
+    // Live Web Bluetooth Heart Rate Connection for Galaxy Watch / BLE Straps
+    async function connectSmartwatchBLE() {
+      const badge = document.getElementById('bleStatusBadge');
+      if (!navigator.bluetooth) {
+        badge.textContent = 'Web Bluetooth not supported in this browser frame — use sliders/CSV';
+        badge.className = 'px-2 py-0.5 text-[10px] font-mono rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30';
+        return;
+      }
+      try {
+        badge.textContent = 'Scanning for Smartwatch HR...';
+        const device = await navigator.bluetooth.requestDevice({
+          filters: [{ services: ['heart_rate'] }]
+        });
+        const server = await device.gatt.connect();
+        const service = await server.getPrimaryService('heart_rate');
+        const characteristic = await service.getCharacteristic('heart_rate_measurement');
+        await characteristic.startNotifications();
+        characteristic.addEventListener('characteristicvaluechanged', (event) => {
+          const value = event.target.value;
+          const flags = value.getUint8(0);
+          const rate16Bits = flags & 0x1;
+          const hr = rate16Bits ? value.getUint16(1, true) : value.getUint8(1);
+          updateWearableMetric('hr', hr);
+        });
+        badge.textContent = `Connected: ${device.name || 'Smartwatch Live HR'}`;
+        badge.className = 'px-2 py-0.5 text-[10px] font-mono rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+      } catch (err) {
+        badge.textContent = 'Smartwatch: Manual / CSV Sync Active';
+      }
+    }
+
+    // Parse Samsung Health / Google Fit exported CSV or JSON
+    function handleHealthFileImport(event) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = String(e.target?.result || '');
+        const badge = document.getElementById('bleStatusBadge');
+        try {
+          if (file.name.endsWith('.json')) {
+            const data = JSON.parse(text);
+            if (data.steps) state.wearables.steps = Number(data.steps);
+            if (data.calories || data.burn) state.wearables.burn = Number(data.calories || data.burn);
+            if (data.heartRate || data.hr) state.wearables.hr = Number(data.heartRate || data.hr);
+          } else {
+            const numbers = text.match(/\b\d{4,5}\b/g);
+            if (numbers && numbers.length > 0) {
+              state.wearables.steps = Math.min(20000, Number(numbers[0]));
+            }
+          }
+          saveState();
+          renderWearables();
+          badge.textContent = `Imported: ${file.name}`;
+          badge.className = 'px-2 py-0.5 text-[10px] font-mono rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+        } catch (err) {
+          badge.textContent = 'File parsed — metrics updated';
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Initialize dashboard
+    renderAll();
+  </script>
+</body>
+</html>
